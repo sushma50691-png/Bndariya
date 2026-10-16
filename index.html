@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#20162e">
+<title>Chuhiya's Secret Kingdom 🎀</title>
+
+<style>
+:root {
+  --bg:#20162e;
+  --pink:#ffb9d7;
+  --pale:#ffe8f2;
+  --lav:#d9c7ff;
+  --cream:#fff5ed;
+  --line:#ffffff30;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;min-height:100vh;overflow-x:hidden;color:var(--cream);
+  font-family:"Trebuchet MS",system-ui,sans-serif;
+  background:
+    radial-gradient(ellipse at 10% 10%,#79548c55,transparent 45%),
+    radial-gradient(ellipse at 90% 60%,#e979b033,transparent 40%),
+    linear-gradient(150deg,#171225,#30203c 55%,#19152c);
+}
+button,input{font:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible{outline:2px solid var(--lav);outline-offset:3px}
+#starscape{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+.star{
+  position:absolute;color:#ffe0f1;opacity:.65;
+  animation:twinkle 3s ease-in-out infinite alternate;
+}
+@keyframes twinkle{to{opacity:.18;transform:scale(.7)}}
+header{
+  max-width:760px;margin:auto;padding:16px;
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  position:relative;
+}
+.pill{
+  border:1px solid var(--line);border-radius:50px;
+  padding:9px 13px;background:#ffffff0c;
+  font-size:12px;font-weight:bold;backdrop-filter:blur(10px);
+}
+#progressWrap{max-width:700px;margin:auto;padding:0 16px;position:relative}
+.progressText{display:flex;justify-content:space-between;font-size:11px;color:#d9c9e2;margin-bottom:7px}
+.progress{height:5px;background:#ffffff18;border-radius:9px;overflow:hidden}
+#bar{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--lav));transition:width .4s}
+main{width:min(680px,calc(100% - 24px));margin:20px auto 105px;position:relative}
+.page{display:none}
+.page.active{display:block;animation:appear .35s ease both}
+@keyframes appear{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card{
+  padding:clamp(22px,5vw,42px);text-align:center;
+  border:1px solid var(--line);border-radius:28px;
+  background:linear-gradient(145deg,#ffffff14,#ffffff06);
+  box-shadow:0 22px 65px #09051255;backdrop-filter:blur(15px);
+  overflow:hidden;
+}
+.eyebrow{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--pink);font-weight:bold}
+h1,h2{font-family:Georgia,serif;font-weight:normal;line-height:1.15}
+h1{font-size:clamp(36px,9vw,58px);margin:16px 0}
+h2{font-size:clamp(27px,7vw,39px);margin:14px 0}
+.pink{color:var(--pink)}
+.art{font-size:clamp(52px,13vw,80px);margin:22px 0;animation:float 3s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-7px) rotate(2deg)}}
+p{color:#e8dceb;line-height:1.75}
+.note,.feedback{
+  padding:14px;margin:17px 0;border-radius:16px;
+  border:1px dashed #ffb9d766;background:#ffb9d70b;
+  color:#ffedf5;line-height:1.7;
+}
+.feedback{min-height:50px;font-size:14px}
+.feedback.good{border-style:solid;border-color:#a9eac080;background:#a9eac010}
+.btn{
+  display:inline-flex;justify-content:center;align-items:center;
+  margin:6px 3px 0;padding:12px 18px;min-height:44px;
+  border:1px solid transparent;border-radius:30px;
+  color:#2c1c33;background:linear-gradient(120deg,#ffd0e5,#ded0ff);
+  font-weight:bold;transition:transform .2s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn.secondary{color:var(--pale);background:#ffffff0c;border-color:var(--line)}
+.btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.options{display:grid;gap:10px;margin:18px 0}
+.option{
+  width:100%;padding:13px;text-align:left;color:var(--pale);
+  background:#ffffff08;border:1px solid #ffb9d744;border-radius:15px;
+}
+.option:hover{background:#ffb9d71c}
+.option:disabled{opacity:.6}
+.tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:18px 0}
+.tile{
+  padding:13px 5px;min-height:95px;overflow-wrap:anywhere;
+  border:1px solid #ffb9d744;border-radius:17px;
+  color:var(--pale);background:#ffffff09;
+}
+.tile b{display:block;font-size:29px;margin-bottom:7px}
+.tile.open{background:#ffb9d726;border-color:var(--pink)}
+input{
+  display:block;width:100%;margin:12px 0;padding:14px;
+  border:1px solid #ffb9d766;border-radius:14px;
+  background:#120d20;color:white;
+}
+input::placeholder{color:#cdb9d4}
+.letter{
+  text-align:left;white-space:pre-line;line-height:1.9;
+  padding:20px;border-radius:17px;background:#ffb9d70c;
+  border:1px solid #ffb9d733;
+}
+.small{font-size:12px;color:#c9bad1}
+nav{
+  position:fixed;bottom:0;left:0;right:0;z-index:5;
+  display:flex;justify-content:center;gap:7px;padding:10px 8px;
+  padding-bottom:calc(10px + env(safe-area-inset-bottom));
+  background:#1b1427ed;backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);
+}
+nav button{
+  width:min(31%,150px);padding:11px 5px;
+  border:1px solid var(--line);border-radius:12px;
+  color:var(--pale);background:#ffffff0c;font-weight:bold;font-size:12px;
+}
+nav button:disabled{opacity:.3}
+.confetti{position:fixed;z-index:10;pointer-events:none;animation:rise 3s ease-out forwards}
+@keyframes rise{to{transform:translateY(-100vh) rotate(40deg);opacity:0}}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0)}
+@media(max-width:420px){
+  header{padding:12px 9px}
+  .pill{font-size:10px;padding:8px}
+  main{width:calc(100% - 16px);margin-top:12px}
+  .card{padding:22px 14px;border-radius:22px}
+  .tile{font-size:12px;min-height:88px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+</head>
+
+<body>
+<div id="starscape" aria-hidden="true"></div>
+
+<header>
+  <div class="pill">👑 Chuhiya's Kingdom</div>
+  <div class="pill">✧ <span id="starCount">0</span> stars</div>
+</header>
+
+<div id="progressWrap">
+  <div class="progressText">
+    <span id="roomName">The Invitation</span>
+    <span id="roomNumber">15 secret doors</span>
+  </div>
+  <div class="progress"><div id="bar"></div></div>
+</div>
+
+<main>
+
+<!-- DOOR 0: INVITATION -->
+<section class="page active" id="p0">
+<div class="card">
+  <div class="eyebrow">A secret invitation</div>
+  <div class="art">🧸💗🐻</div>
+  <p>Gubbu & Bubbu invite you to...</p>
+  <h1>The 15 Secret Doors<br><span class="pink">of Chuhiya</span></h1>
+  <p>A magical little kingdom is waiting beneath the lavender moon. Hidden gifts, tiny riddles and a birthday surprise are waiting just for you.</p>
+  <div class="note">🗝️ Follow the clues. Collect stars. Discover the secret.</div>
+  <button class="btn" onclick="go(1)">Open the invitation 💌</button>
+  <p class="small">Psst... tap anything that looks suspicious. 🎀</p>
+</div>
+</section>
+
+<!-- DOOR 1 -->
+<section class="page" id="p1">
+<div class="card">
+  <div class="eyebrow">Door 01 · The Royal Gate</div>
+  <div class="art">🏰🌙✨</div>
+  <h2>The gate knows your name</h2>
+  <p>The guards will only welcome the princess this invitation belongs to.</p>
+  <label class="sr-only" for="princess">Princess's name</label>
+  <input id="princess" placeholder="Enter the princess's name..." maxlength="40">
+  <button class="btn" onclick="checkName()">Knock knock 🔔</button>
+  <div class="feedback" id="f1" aria-live="polite">Hint: the invitation was made for Chuhiya. 💗</div>
+  <button class="btn" id="n1" disabled onclick="go(2)">Enter the moon garden →</button>
+</div>
+</section>
+
+<!-- DOOR 2 -->
+<section class="page" id="p2">
+<div class="card">
+  <div class="eyebrow">Door 02 · Moon Garden</div>
+  <div class="art">🌙🌷🧚🏻</div>
+  <h2>The Whispering Flowers</h2>
+  <p>What grows when you share it with others?</p>
+  <div class="options">
+    <button class="option" onclick="quiz(2,0)">A grumpy secret 😤</button>
+    <button class="option" onclick="quiz(2,1)">Happiness 💗</button>
+    <button class="option" onclick="quiz(2,2)">A shoe 👟</button>
+  </div>
+  <div class="feedback" id="f2">Choose the answer the fairy is waiting for.</div>
+  <button class="btn" id="n2" disabled onclick="go(3)">Follow the fireflies ✨</button>
+</div>
+</section>
+
+<!-- DOOR 3 -->
+<section class="page" id="p3">
+<div class="card">
+  <div class="eyebrow">Door 03 · Firefly Trail</div>
+  <div class="art">🪄🪲✨</div>
+  <h2>Catch a lucky firefly</h2>
+  <p>Three little fireflies have gifts. One is carrying a secret star.</p>
+  <div class="tiles">
+    <button class="tile" id="fly0" onclick="firefly(0)"><b>🪲</b>Firefly A</button>
+    <button class="tile" id="fly1" onclick="firefly(1)"><b>🪲</b>Firefly B</button>
+    <button class="tile" id="fly2" onclick="firefly(2)"><b>🪲</b>Firefly C</button>
+  </div>
+  <div class="feedback" id="f3">Tap all three to discover their secrets.</div>
+  <button class="btn" id="n3" disabled onclick="go(4)">Enter the puzzle library 📚</button>
+</div>
+</section>
+
+<!-- DOOR 4 -->
+<section class="page" id="p4">
+<div class="card">
+  <div class="eyebrow">Door 04 · Puzzle Library</div>
+  <div class="art">📚🦉🔎</div>
+  <h2>The Owl's Riddle</h2>
+  <p>I have hands but cannot clap. I tell you when moments pass. What am I?</p>
+  <div class="options">
+    <button class="option" onclick="quiz(4,0)">A teddy bear 🧸</button>
+    <button class="option" onclick="quiz(4,1)">A clock 🕰️</button>
+    <button class="option" onclick="quiz(4,2)">A cupcake 🧁</button>
+  </div>
+  <div class="feedback" id="f4">The owl is waiting patiently...</div>
+  <button class="btn" id="n4" disabled onclick="go(5)">Find the velvet key 🗝️</button>
+</div>
+</section>
+
+<!-- DOOR 5 -->
+<section class="page" id="p5">
+<div class="card">
+  <div class="eyebrow">Door 05 · Velvet Key</div>
+  <div class="art">🗝️🎀🔒</div>
+  <h2>Three Keys, One Door</h2>
+  <p>The lock has a tiny heart carved into it. Which key belongs here?</p>
+  <div class="options">
+    <button class="option" onclick="quiz(5,0)">A rusty key 🗝️</button>
+    <button class="option" onclick="quiz(5,1)">A chocolate key 🍫</button>
+    <button class="option" onclick="quiz(5,2)">A heart-shaped pink key 💗</button>
+  </div>
+  <div class="feedback" id="f5">Look for the key that matches the lock.</div>
+  <button class="btn" id="n5" disabled onclick="go(6)">Unlock the secret room →</button>
+</div>
+</section>
+
+<!-- DOOR 6 -->
+<section class="page" id="p6">
+<div class="card">
+  <div class="eyebrow">Door 06 · Teddy Disco</div>
+  <div class="art" id="danceArt">🧸🪩🐻</div>
+  <h2>The Teddy Dance Party</h2>
+  <p>Gubbu and Bubbu have practised exactly one dance move. It is... questionable.</p>
+  <button class="btn" onclick="dance()">Start the teddy disco 🪩</button>
+  <div class="feedback" id="f6">The teddies are waiting beside the speakers...</div>
+  <button class="btn" id="n6" disabled onclick="go(7)">Visit the birthday bakery →</button>
+</div>
+</section>
+
+<!-- DOOR 7 -->
+<section class="page" id="p7">
+<div class="card">
+  <div class="eyebrow">Door 07 · Birthday Bakery</div>
+  <div class="art" id="cakeArt">🎂</div>
+  <h2>A Cake with a Secret</h2>
+  <p>Make a little wish. Tap all three candles to send it into the night sky.</p>
+  <div class="tiles">
+    <button class="tile" id="c0" onclick="candle(0)"><b>🕯️</b>Candle 1</button>
+    <button class="tile" id="c1" onclick="candle(1)"><b>🕯️</b>Candle 2</button>
+    <button class="tile" id="c2" onclick="candle(2)"><b>🕯️</b>Candle 3</button>
+  </div>
+  <div class="feedback" id="f7">Make a wish before the last candle goes out. ✨</div>
+  <button class="btn" id="n7" disabled onclick="go(8)">Visit the mystery gift shop 🎁</button>
+</div>
+</section>
+
+<!-- DOOR 8 -->
+<section class="page" id="p8">
+<div class="card">
+  <div class="eyebrow">Door 08 · Mystery Gift Shop</div>
+  <div class="art">🎁🎀🎁</div>
+  <h2>Choose Your Gifts</h2>
+  <p>Three presents have arrived. Each hides a different kind of magic.</p>
+  <div class="tiles">
+    <button class="tile" id="g0" onclick="gift(0)"><b>🎁</b>Gift A</button>
+    <button class="tile" id="g1" onclick="gift(1)"><b>🎀</b>Gift B</button>
+    <button class="tile" id="g2" onclick="gift(2)"><b>💝</b>Gift C</button>
+  </div>
+  <div class="feedback" id="f8">Open all three gifts to reveal the secret.</div>
+  <button class="btn" id="n8" disabled onclick="go(9)">Explore the memory aquarium 🫧</button>
+</div>
+</section>
+
+<!-- DOOR 9 -->
+<section class="page" id="p9">
+<div class="card">
+  <div class="eyebrow">Door 09 · Memory Aquarium</div>
+  <div class="art">🐠🫧🪼</div>
+  <h2>Three Floating Memories</h2>
+  <p>Tap every bubble to discover a little reminder of life's lovely things.</p>
+  <div class="tiles">
+    <button class="tile" id="b0" onclick="bubble(0)"><b>🫧</b>Bubble 1</button>
+    <button class="tile" id="b1" onclick="bubble(1)"><b>🫧</b>Bubble 2</button>
+    <button class="tile" id="b2" onclick="bubble(2)"><b>🫧</b>Bubble 3</button>
+  </div>
+  <div class="feedback" id="f9">Some treasures are little moments that stay in your heart.</div>
+  <button class="btn" id="n9" disabled onclick="go(10)">Find the password chamber 🔐</button>
+</div>
+</section>
+
+<!-- DOOR 10 -->
+<section class="page" id="p10">
+<div class="card">
+  <div class="eyebrow">Door 10 · Password Chamber</div>
+  <div class="art">🔐💌🗝️</div>
+  <h2>The Secret Password</h2>
+  <p>The lock wants the nickname of the princess who owns this kingdom.</p>
+  <input id="password" placeholder="Type the secret nickname..." maxlength="40">
+  <button class="btn" onclick="checkPassword()">Unlock the chamber 🔓</button>
+  <div class="feedback" id="f10">Hint: this name appears throughout the kingdom.</div>
+  <button class="btn" id="n10" disabled onclick="go(11)">Enter the wishing stars →</button>
+</div>
+</section>
+
+<!-- DOOR 11 -->
+<section class="page" id="p11">
+<div class="card">
+  <div class="eyebrow">Door 11 · Wishing Stars</div>
+  <div class="art">🌠🌙⭐</div>
+  <h2>Make a Tiny Wish</h2>
+  <p>Choose a star to send a little wish into the universe.</p>
+  <div class="tiles">
+    <button class="tile" id="w0" onclick="wish(0)"><b>⭐</b>Star 1</button>
+    <button class="tile" id="w1" onclick="wish(1)"><b>🌟</b>Star 2</button>
+    <button class="tile" id="w2" onclick="wish(2)"><b>💫</b>Star 3</button>
+  </div>
+  <div class="feedback" id="f11">May your next chapter bring you reasons to smile.</div>
+  <button class="btn" id="n11" disabled onclick="go(12)">Open the royal letter 💌</button>
+</div>
+</section>
+
+<!-- DOOR 12 -->
+<section class="page" id="p12">
+<div class="card">
+  <div class="eyebrow">Door 12 · Royal Letter</div>
+  <div class="art">💌🌷👑</div>
+  <h2>A Letter for Chuhiya</h2>
+  <div class="letter">To the girl who owns this tiny kingdom 💗
+
+Dear Chuhiya,
+
+If this little world could give you one thing, it would be a reminder that you deserve kindness, laughter, peaceful days and all the little things that make your heart happy.
+
+May you always have reasons to smile at random moments, people who listen when you speak, and dreams that make you excited about tomorrow.
+
+Whenever life feels a little too loud, I hope you remember that even the smallest things can bring magic back into an ordinary day.
+
+With a kingdom full of pink hearts,
+Gubbu & Bubbu 🧸🐻</div>
+  <div class="feedback" id="f12">P.S. The teddies say there's still more magic ahead...</div>
+  <button class="btn" id="n12" onclick="readLetter()">I read every word 💗</button>
+</div>
+</section>
+
+<!-- DOOR 13 -->
+<section class="page" id="p13">
+<div class="card">
+  <div class="eyebrow">Door 13 · Dream Keeper</div>
+  <div class="art">🧚🏻🌈🦋</div>
+  <h2>The Dream Keeper's Challenge</h2>
+  <p>Which treasure can you give someone without spending a single coin?</p>
+  <div class="options">
+    <button class="option" onclick="quiz(13,0)">A diamond crown 💎</button>
+    <button class="option" onclick="quiz(13,1)">Time and kindness 💗</button>
+    <button class="option" onclick="quiz(13,2)">A golden castle 🏰</button>
+  </div>
+  <div class="feedback" id="f13">Think of something that can make someone's day better.</div>
+  <button class="btn" id="n13" disabled onclick="go(14)">Approach the final vault 🔮</button>
+</div>
+</section>
+
+<!-- DOOR 14 -->
+<section class="page" id="p14">
+<div class="card">
+  <div class="eyebrow">Door 14 · Final Vault</div>
+  <div class="art">🔮💖🔒</div>
+  <h2>The Last Little Lock</h2>
+  <p>What is the most precious treasure in this kingdom?</p>
+  <div class="options">
+    <button class="option" onclick="quiz(14,0)">Being the richest princess 👑</button>
+    <button class="option" onclick="quiz(14,1)">A heart full of kindness 💗</button>
+    <button class="option" onclick="quiz(14,2)">A mountain of chocolate 🍫</button>
+  </div>
+  <div class="feedback" id="f14">The vault glows when it senses something precious...</div>
+  <button class="btn" id="n14" disabled onclick="go(15)">Reveal the final surprise 🎉</button>
+</div>
+</section>
+
+<!-- DOOR 15 -->
+<section class="page" id="p15">
+<div class="card">
+  <div class="eyebrow">Door 15 · Birthday Finale</div>
+  <div class="art">🎉🎂👑💗</div>
+  <h1>Happy Birthday<br><span class="pink">Chuhiya!</span></h1>
+  <p>You made it through all 15 secret doors! Gubbu and Bubbu are throwing the biggest tiny party in the kingdom, just for you.</p>
+  <div class="note">💗 May your birthday bring laughter, sweet surprises, beautiful memories, peaceful days and a thousand tiny reasons to smile.</div>
+  <div class="art">🧸💐🐻</div>
+  <p><b>Official title:</b> Princess of the Pink Kingdom 👑</p>
+  <button class="btn" onclick="celebrate()">Release the birthday magic 🎊</button>
+  <button class="btn secondary" onclick="restart()">Play again ↺</button>
+  <div class="feedback" id="f15">Gubbu and Bubbu are ready when you are...</div>
+</div>
+</section>
+
+</main>
+
+<nav aria-label="Adventure navigation">
+  <button id="backBtn" onclick="go(current-1)">← Back</button>
+  <button onclick="go(0)">🏰 Home</button>
+  <button id="nextBtn" onclick="nextRoom()">Next →</button>
+</nav>
+
+<script>
+"use strict";
+
+/* Decorative stars */
+(function makeStars(){
+  const sky=document.getElementById("starscape");
+  for(let i=0;i<55;i++){
+    const s=document.createElement("span");
+    s.className="star";
+    s.textContent=["✦","·","✧","♡"][i%4];
+    s.style.left=Math.random()*100+"%";
+    s.style.top=Math.random()*100+"%";
+    s.style.fontSize=(8+Math.random()*13)+"px";
+    s.style.animationDelay=Math.random()*3+"s";
+    sky.appendChild(s);
+  }
+})();
+
+/* Single source of truth for navigation and rewards */
+let current=0;
+let stars=0;
+const unlocked=new Set([0,1]);
+const earned=new Set();
+const solved=new Set();
+const collected={
+  flies:new Set(),candles:new Set(),gifts:new Set(),
+  bubbles:new Set(),wishes:new Set()
+};
+
+const names=[
+  "The Invitation","The Royal Gate","Moon Garden","Firefly Trail",
+  "Puzzle Library","Velvet Key","Teddy Disco","Birthday Bakery",
+  "Mystery Gift Shop","Memory Aquarium","Password Chamber",
+  "Wishing Stars","Royal Letter","Dream Keeper","Final Vault","Birthday Finale"
+];
+
+const $=id=>document.getElementById(id);
+
+function reward(key,amount=1){
+  if(earned.has(key))return;
+  earned.add(key);
+  stars+=amount;
+  $("starCount").textContent=stars;
+}
+
+function unlock(room){
+  unlocked.add(room);
+  reward("door-"+room);
+  updateNav();
+}
+
+function say(id,text,good=false){
+  const el=$(id);
+  el.textContent=text;
+  el.classList.toggle("good",good);
+}
+
+function go(room){
+  room=Number(room);
+  if(!Number.isInteger(room)||room<0||room>15)return;
+
+  if(room!==0&&!unlocked.has(room)){
+    const box=$("p"+current).querySelector(".feedback");
+    if(box)box.textContent="This little door is still locked. Complete the clue to continue. 🗝️";
+    return;
+  }
+
+  document.querySelectorAll(".page").forEach(page=>{
+    const active=page.id==="p"+room;
+    page.classList.toggle("active",active);
+    page.setAttribute("aria-hidden",String(!active));
+  });
+
+  current=room;
+  $("roomName").textContent=names[room];
+  $("roomNumber").textContent=room===0?"15 secret doors":`Door ${String(room).padStart(2,"0")} of 15`;
+  $("bar").style.width=(room===0?0:Math.min(100,(unlocked.size-1)/15*100))+"%"
